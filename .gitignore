@@ -1,0 +1,29 @@
+# Visual Studio
+.vs/
+*.vcxproj.user
+*.suo
+*.sdf
+*.opensdf
+*.opendb
+
+# Build outputs
+Release/
+Debug/
+x64/
+*.obj
+*.pdb
+*.log
+*.tlog
+*.idb
+*.ipch
+*.lastbuildstate
+*.iobj
+*.ipdb
+
+# Driver output (don't commit compiled driver)
+*.sys
+
+# Misc
+Thumbs.db
+*.swp
+*~

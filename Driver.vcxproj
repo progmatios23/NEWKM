@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{50E557F0-1099-4410-9BE9-A4D2C628DCD6}</ProjectGuid>
+    <RootNamespace>Driver</RootNamespace>
+    <Keyword>WDM</Keyword>
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <DriverType>WDM</DriverType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <TargetVersion>Windows10</TargetVersion>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <DriverType>WDM</DriverType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+    <TargetVersion>Windows10</TargetVersion>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <SpectreMitigation>false</SpectreMitigation>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <!-- Output directories -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)x64\$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <TargetName>Driver</TargetName>
+    <TargetExt>.sys</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)x64\$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <TargetName>Driver</TargetName>
+    <TargetExt>.sys</TargetExt>
+  </PropertyGroup>
+  <!-- Debug build settings -->
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_AMD64_;_DEBUG;NTDDI_VERSION=0x0A000007;_WIN32_WINNT=0x0A00;WINVER=0x0A00;WINNT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir)Include\$(TargetPlatformVersion)\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EntryPointSymbol>DriverEntry</EntryPointSymbol>
+      <SubSystem>Native</SubSystem>
+      <Driver>Driver</Driver>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ntoskrnl.lib;hal.lib;wdmsec.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <!-- Release build settings -->
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PreprocessorDefinitions>_AMD64_;NDEBUG;NTDDI_VERSION=0x0A000007;_WIN32_WINNT=0x0A00;WINVER=0x0A00;WINNT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <AdditionalIncludeDirectories>$(WindowsSdkDir)Include\$(TargetPlatformVersion)\km;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <EntryPointSymbol>DriverEntry</EntryPointSymbol>
+      <SubSystem>Native</SubSystem>
+      <Driver>Driver</Driver>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>ntoskrnl.lib;hal.lib;wdmsec.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(WindowsSdkDir)Lib\$(TargetPlatformVersion)\km\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <AdditionalOptions>/INTEGRITYCHECK %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <!-- Source files -->
+  <ItemGroup>
+    <ClCompile Include="driver.cpp" />
+    <ClCompile Include="memory.cpp" />
+    <ClCompile Include="hook.cpp" />
+    <ClCompile Include="spoof_call.cpp" />
+    <ClCompile Include="physical_memory.cpp" />
+    <ClCompile Include="pte_hook.cpp" />
+    <ClCompile Include="cleaner.cpp" />
+  </ItemGroup>
+  <!-- Header files -->
+  <ItemGroup>
+    <ClInclude Include="driver.h" />
+    <ClInclude Include="definitions.h" />
+    <ClInclude Include="shared.h" />
+    <ClInclude Include="hook.h" />
+    <ClInclude Include="pte_hook.h" />
+    <ClInclude Include="physical_memory.h" />
+    <ClInclude Include="spoof_call.h" />
+    <ClInclude Include="cleaner.h" />
+    <ClInclude Include="memory.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+  <!--
+    Disable WDK auto-signing and INF processing.
+    Since we are "Application" type now, WDK targets might not run automatically,
+    but we keep these suppressions just in case.
+  -->
+  <PropertyGroup>
+    <EnableInf2cat>false</EnableInf2cat>
+    <InfArch>amd64</InfArch>
+  </PropertyGroup>
+  <Target Name="StampInf" />
+  <Target Name="Inf2Cat" />
+  <Target Name="Sign" />
+</Project>
